@@ -5,10 +5,15 @@ import ReactDOM from 'react-dom'
 class Album extends React.Component  {
 
    constructor () {
-    super(props)
+    super()
   }
   //console.log('props:', props)
 
+  componentDidMount() {
+    const albumId = this.props.routeParams.albumId;
+    const selectAlbum = this.props.selectAlbum;
+    selectAlbum(albumId);
+  }
 
   render() {
   const album = this.props.album;
