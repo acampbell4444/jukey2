@@ -22,6 +22,7 @@ export default class AppContainer extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
+    this.selectArtist = this.selectArtist.bind(this);
     //this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
@@ -108,6 +109,39 @@ export default class AppContainer extends Component {
       }));
   }
 
+    selectArtist (artistId) {
+      
+      const selArtist = axios.get(`/api/artists/${artistId}`)
+      const selAlbums = axios.get(`/api/artists/${artistId}/albums`)
+      const selSongs = axios.get(`/api/artists/${artistId}/songs`)
+
+      Promise.all([selArtist, selAlbums, selSongs]).then(values => { 
+         const selectedArtist = values[0].data 
+         const selectedAlbums = values[1].map(val=>val.data)
+         const selectedSongs = values[2].map(val=>val.data)
+         selectedArtist.selectedAlbums = selectedAlbums;
+         selectedArtist.selectedSongs = selectedSongs;
+
+
+
+
+
+         this.setState({selectedArtist:selectedArtist})
+      });
+    
+
+
+
+
+
+
+
+
+
+
+  }
+  
+
   /*deselectAlbum () {
     this.setState({ selectedAlbum: {}});
   }*/
@@ -128,11 +162,14 @@ export default class AppContainer extends Component {
       currentSong: this.state.currentSong,
       isPlaying: this.state.isPlaying,
       toggle: this.toggleOne,
+      currentArtist : this.state.selectedArtist,
 
       // Albums (plural) component's props
       albums: this.state.albums,
       artists: this.state.artists,
-      selectAlbum: this.selectAlbum // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
+      selectAlbum: this.selectAlbum, // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
+      selectArtist: this.selectArtist // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
+   
     })
     : null
 }
