@@ -12,7 +12,7 @@ class Artist extends React.Component  {
 
   componentDidMount() {
     const artistId = this.props.routeParams.artistId;
-  
+
     const selectArtist = this.props.selectArtist;
     selectArtist(artistId);
   }
@@ -21,19 +21,19 @@ class Artist extends React.Component  {
   const album = this.props.album;
   const currentSong = this.props.currentSong;
   const isPlaying = this.props.isPlaying;
-  const toggleOne = this.props.toggleOne;
+  const toggleOne = this.props.toggle;
     const songs = this.props.songs;
 
-  const toggle = this.props.toggleOne;
- 
+  //const toggle = this.props.toggleOne;
+
   const currentArtist = this.props.currentArtist
   console.log('curartisselectedalbums',currentArtist.selectedAlbums)
   console.log('curart',currentArtist)
-  
+
   return (
     <div>
       <h3>{currentArtist.name}</h3>
-      
+
       <h4>Albums</h4>
 
       {
@@ -55,8 +55,8 @@ class Artist extends React.Component  {
 
 <div className="album">
       <div>
-      
-       
+
+
       </div>
 
       <Songs
@@ -70,10 +70,10 @@ class Artist extends React.Component  {
         ))
       }
 
-      
 
 
-   
+
+
 
 
 
