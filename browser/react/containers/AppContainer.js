@@ -110,24 +110,20 @@ export default class AppContainer extends Component {
   }
 
     selectArtist (artistId) {
-      
       const selArtist = axios.get(`/api/artists/${artistId}`)
       const selAlbums = axios.get(`/api/artists/${artistId}/albums`)
       const selSongs = axios.get(`/api/artists/${artistId}/songs`)
 
       Promise.all([selArtist, selAlbums, selSongs]).then(values => { 
          const selectedArtist = values[0].data 
-         const selectedAlbums = values[1].map(val=>val.data)
-         const selectedSongs = values[2].map(val=>val.data)
-         selectedArtist.selectedAlbums = selectedAlbums;
+          const selectedAlbums = values[1].data
+          const selectedSongs = values[2].data
+         selectedArtist.selectedAlbums = convertAlbums(selectedAlbums);
          selectedArtist.selectedSongs = selectedSongs;
-
-
-
-
-
-         this.setState({selectedArtist:selectedArtist})
-      });
+         return selectedArtist
+      }).then(selectedArtist=>
+        this.setState({selectedArtist:selectedArtist})
+      )
     
 
 
